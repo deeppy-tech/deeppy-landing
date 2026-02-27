@@ -454,7 +454,7 @@ function LandingPage({ L }) {
                 style={{ textAlign: "left", background: T.white, border: `1px solid ${T.border}`, borderRadius: 14, padding: 24, cursor: "pointer", fontFamily: font, transition: "all 0.2s", display: "flex", flexDirection: "column" }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = T.accentBorder; e.currentTarget.style.boxShadow = `0 4px 20px rgba(46,196,160,0.08)`; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.boxShadow = "none"; }}>
-                <div style={{ width: 40, height: 40, borderRadius: 10, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}><I d={$ic[f.ic]} size={20} color={T.accent} /></div>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}><I d={ic[f.ic]} size={20} color={T.accent} /></div>
                 <Badge bg={T.bgSoft} color={T.textSec} style={{ marginBottom: 10, fontSize: 10 }}>{f.tag}</Badge>
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: T.navy, lineHeight: 1.35, marginBottom: 8 }}>{f.h}</h3>
                 <p style={{ fontSize: 13, color: T.textSec, lineHeight: 1.6, flex: 1 }}>{f.p}</p>
@@ -475,7 +475,7 @@ function LandingPage({ L }) {
           <div style={{ position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(11,29,58,0.6)", backdropFilter: "blur(4px)" }} onClick={() => setExpandedFeat(null)}>
             <div style={{ background: T.white, borderRadius: 16, maxWidth: 480, width: "92%", maxHeight: "88vh", overflowY: "auto", position: "relative" }} onClick={(e) => e.stopPropagation()}>
               <div style={{ padding: "24px 28px 0", display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 10, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center" }}><I d={$ic[f.ic]} size={20} color={T.accent} /></div>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center" }}><I d={ic[f.ic]} size={20} color={T.accent} /></div>
                 <div style={{ flex: 1 }}><Badge bg={T.bgSoft} color={T.textSec} style={{ fontSize: 10 }}>{f.tag}</Badge><h3 style={{ fontSize: 17, fontWeight: 800, color: T.navy, marginTop: 4 }}>{f.h}</h3></div>
                 <button onClick={() => setExpandedFeat(null)} style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}><I d={ic.x} size={18} color={T.textSec} /></button>
               </div>
@@ -494,7 +494,7 @@ function LandingPage({ L }) {
             {t.how.steps.map((s, i) => (
               <div key={i}>
                 <div style={{ fontSize: 48, fontWeight: 800, color: T.accentSoft, letterSpacing: "-0.04em", marginBottom: 12 }}>{s.n}</div>
-                <div style={{ width: 44, height: 44, borderRadius: 12, background: T.navy, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}><I d={$ic[s.ic]} size={22} color={T.accent} /></div>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: T.navy, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}><I d={ic[s.ic]} size={22} color={T.accent} /></div>
                 <h3 style={{ fontSize: 17, fontWeight: 700, color: T.navy, lineHeight: 1.3, marginBottom: 10 }}>{s.h}</h3>
                 <p style={{ fontSize: 13, color: T.textSec, lineHeight: 1.65 }}>{s.p}</p>
                 {s.p2 && (
