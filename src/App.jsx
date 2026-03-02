@@ -77,8 +77,8 @@ function CookieBanner({ lang }) {
         <a href="https://www.levery.it/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "#34D399", textDecoration: "none" }}>Privacy Policy</a>
       </p>
       <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-        <button onClick={reject} style={{ padding: "8px 20px", borderRadius: 6, border: "1px solid #243356", background: "transparent", color: "#94A3B8", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>{it ? "Rifiuta" : "Decline"}</button>
-        <button onClick={accept} style={{ padding: "8px 20px", borderRadius: 6, border: "none", background: "#34D399", color: "#0F1729", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>{it ? "Accetta" : "Accept"}</button>
+        <button data-attr="cookie-reject" onClick={reject} style={{ padding: "8px 20px", borderRadius: 6, border: "1px solid #243356", background: "transparent", color: "#94A3B8", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>{it ? "Rifiuta" : "Decline"}</button>
+        <button data-attr="cookie-accept" onClick={accept} style={{ padding: "8px 20px", borderRadius: 6, border: "none", background: "#34D399", color: "#0F1729", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>{it ? "Accetta" : "Accept"}</button>
       </div>
     </div>
   );
@@ -314,7 +314,7 @@ const FormModal = ({ open, onClose, t, context }) => {
                 </div>
               </div>
               <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder={t.message} rows={3} style={{ width: "100%", padding: "12px 16px", borderRadius: 8, border: `1px solid ${T.border}`, fontSize: 14, fontFamily: "inherit", resize: "vertical", boxSizing: "border-box", outline: "none" }} />
-              <Btn primary onClick={submit} style={{ width: "100%", justifyContent: "center", fontSize: 15, padding: "14px 0" }}>{t.send} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
+              <Btn primary data-attr="form-submit" onClick={submit} style={{ width: "100%", justifyContent: "center", fontSize: 15, padding: "14px 0" }}>{t.send} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
             </div>
           </>
         )}
@@ -336,15 +336,15 @@ const DppModal = ({ lang, prod, activeTab, onTab, onClose, onComplete, onCta, t 
           <button onClick={onClose} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer" }}><I d={ic.x} size={18} color={T.textMuted} /></button>
         </div>
         <div style={{ display: "flex", borderBottom: `1px solid ${T.border}`, padding: "0 28px" }}>
-          {tabs.map((tab, j) => <button key={j} onClick={() => onTab(j)} style={{ padding: "12px 14px", fontSize: 12, fontWeight: 600, color: activeTab === j ? T.accent : T.textSec, background: "none", border: "none", borderBottom: activeTab === j ? `2px solid ${T.accent}` : "2px solid transparent", cursor: "pointer", fontFamily: "inherit" }}>{tab}{j === 3 && prod.missing.length > 0 ? ` (${prod.missing.length})` : ""}</button>)}
+          {tabs.map((tab, j) => <button key={j} data-attr={`dpp-tab-${j}`} onClick={() => onTab(j)} style={{ padding: "12px 14px", fontSize: 12, fontWeight: 600, color: activeTab === j ? T.accent : T.textSec, background: "none", border: "none", borderBottom: activeTab === j ? `2px solid ${T.accent}` : "2px solid transparent", cursor: "pointer", fontFamily: "inherit" }}>{tab}{j === 3 && prod.missing.length > 0 ? ` (${prod.missing.length})` : ""}</button>)}
         </div>
         <div style={{ padding: "20px 28px 28px" }}>
           {activeTab === 0 && <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>{prod.specs.map(([l, v], j) => <div key={j} style={{ padding: "10px 12px", borderRadius: 8, background: T.bgSoft }}><div style={{ fontSize: 10, color: T.textSec, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>{l}</div><div style={{ fontSize: 14, fontWeight: 700, color: T.navy }}>{v}</div></div>)}</div>}
           {activeTab === 1 && <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>{prod.certs.map((c, j) => <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 8, background: T.bgSoft }}><I d={ic.shield} size={16} color={T.accent} /><span style={{ fontSize: 13, fontWeight: 600, color: T.navy, flex: 1 }}>{c}</span><I d={ic.check} size={14} color={T.accent} /></div>)}</div>}
           {activeTab === 2 && <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>{prod.env.map(([l, v], j) => <div key={j} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderRadius: 8, background: T.bgSoft }}><span style={{ fontSize: 13, color: T.textSec }}>{l}</span><span style={{ fontSize: 14, fontWeight: 700, color: v === "—" ? T.textMuted : T.navy }}>{v}</span></div>)}</div>}
-          {activeTab === 3 && <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>{prod.missing.map((m, j) => <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 8, background: T.bgSoft }}><div style={{ width: 16, height: 16, borderRadius: "50%", border: `2px solid ${T.warn}`, opacity: 0.6, flexShrink: 0 }} /><span style={{ fontSize: 13, color: T.textSec, flex: 1 }}>{m}</span><span style={{ fontSize: 10, color: T.warn, fontWeight: 600 }}>{t.miss}</span></div>)}<button onClick={onComplete} style={{ marginTop: 8, width: "100%", padding: "12px 0", borderRadius: 10, background: T.accentSoft, border: `1px solid ${T.accentBorder}`, color: T.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}><I d={ic.puzzle} size={15} color={T.accent} />{t.complete}</button></div>}
+          {activeTab === 3 && <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>{prod.missing.map((m, j) => <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 8, background: T.bgSoft }}><div style={{ width: 16, height: 16, borderRadius: "50%", border: `2px solid ${T.warn}`, opacity: 0.6, flexShrink: 0 }} /><span style={{ fontSize: 13, color: T.textSec, flex: 1 }}>{m}</span><span style={{ fontSize: 10, color: T.warn, fontWeight: 600 }}>{t.miss}</span></div>)}<button data-attr="dpp-complete" onClick={onComplete} style={{ marginTop: 8, width: "100%", padding: "12px 0", borderRadius: 10, background: T.accentSoft, border: `1px solid ${T.accentBorder}`, color: T.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}><I d={ic.puzzle} size={15} color={T.accent} />{t.complete}</button></div>}
         </div>
-        <div style={{ borderTop: `1px solid ${T.border}`, padding: "14px 28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontSize: 11, color: T.textSec }}>{t.exampleNote}</span><Btn primary onClick={onCta} style={{ padding: "8px 20px", fontSize: 12 }}>{t.createYours}</Btn></div>
+        <div style={{ borderTop: `1px solid ${T.border}`, padding: "14px 28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontSize: 11, color: T.textSec }}>{t.exampleNote}</span><Btn primary data-attr="dpp-create-yours" onClick={onCta} style={{ padding: "8px 20px", fontSize: 12 }}>{t.createYours}</Btn></div>
       </div>
     </div>
   );
@@ -416,19 +416,19 @@ function LandingPage({ L }) {
             <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}><img src={LOGO_SRC} alt="DeePPy" style={{ height: 36, width: 36, objectFit: "cover", borderRadius: 9 }} /><span style={{ fontWeight: 800, fontSize: 18, color: T.navy }}>DeePPy</span></span>
           </div>
           <div className="desk" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            {[["feat", t.nav.feat], ["how", t.nav.how], ["plans", t.nav.plans]].map(([id, l]) => <button key={id} onClick={() => scrollTo(id)} style={{ background: "none", border: "none", color: T.textSec, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: font }}>{l}</button>)}
-            <button onClick={() => { track("login_clicked"); openForm("login_interest") }} style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 8, padding: "7px 16px", color: T.navy, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: font }}>{t.nav.login}</button>
-            <div style={{ display: "flex", gap: 4 }}>{["it", "en"].map((l) => <button key={l} onClick={() => setLang(l)} style={{ background: lang === l ? T.navy : "transparent", color: lang === l ? T.white : T.textSec, border: "none", borderRadius: 6, padding: "4px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer", textTransform: "uppercase", fontFamily: font }}>{l}</button>)}</div>
-            <Btn primary onClick={() => openForm("nav")} style={{ padding: "8px 20px", fontSize: 13 }}>{t.nav.cta}</Btn>
+            {[["feat", t.nav.feat], ["how", t.nav.how], ["plans", t.nav.plans]].map(([id, l]) => <button key={id} data-attr={`nav-${id}`} onClick={() => scrollTo(id)} style={{ background: "none", border: "none", color: T.textSec, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: font }}>{l}</button>)}
+            <button data-attr="btn-login" onClick={() => { track("login_clicked"); openForm("login_interest") }} style={{ background: "none", border: `1px solid ${T.border}`, borderRadius: 8, padding: "7px 16px", color: T.navy, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: font }}>{t.nav.login}</button>
+            <div style={{ display: "flex", gap: 4 }}>{["it", "en"].map((l) => <button key={l} data-attr={`lang-${l}`} onClick={() => setLang(l)} style={{ background: lang === l ? T.navy : "transparent", color: lang === l ? T.white : T.textSec, border: "none", borderRadius: 6, padding: "4px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer", textTransform: "uppercase", fontFamily: font }}>{l}</button>)}</div>
+            <Btn primary data-attr="cta-nav" onClick={() => openForm("nav")} style={{ padding: "8px 20px", fontSize: 13 }}>{t.nav.cta}</Btn>
           </div>
           <div className="mob" style={{ display: "none", alignItems: "center", gap: 10 }}>
-            <div style={{ display: "flex", gap: 4 }}>{["it", "en"].map((l) => <button key={l} onClick={() => setLang(l)} style={{ background: lang === l ? T.navy : "transparent", color: lang === l ? T.white : T.textSec, border: "none", borderRadius: 6, padding: "4px 8px", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: font }}>{l}</button>)}</div>
-            <button onClick={() => setMobileMenu(!mobileMenu)} style={{ background: "none", border: "none", cursor: "pointer" }}><I d={mobileMenu ? ic.x : ic.menu} size={22} color={T.navy} /></button>
+            <div style={{ display: "flex", gap: 4 }}>{["it", "en"].map((l) => <button key={l} data-attr={`lang-${l}`} onClick={() => setLang(l)} style={{ background: lang === l ? T.navy : "transparent", color: lang === l ? T.white : T.textSec, border: "none", borderRadius: 6, padding: "4px 8px", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: font }}>{l}</button>)}</div>
+            <button data-attr="btn-menu-toggle" onClick={() => setMobileMenu(!mobileMenu)} style={{ background: "none", border: "none", cursor: "pointer" }}><I d={mobileMenu ? ic.x : ic.menu} size={22} color={T.navy} /></button>
           </div>
         </div>
         {mobileMenu && <div className="mob" style={{ display: "flex", flexDirection: "column", padding: "12px 24px 20px", gap: 12, borderTop: `1px solid ${T.borderLight}`, background: T.white }}>
-          {[["feat", t.nav.feat], ["how", t.nav.how], ["plans", t.nav.plans]].map(([id, l]) => <button key={id} onClick={() => scrollTo(id)} style={{ background: "none", border: "none", color: T.textDark, fontSize: 15, fontWeight: 600, cursor: "pointer", textAlign: "left", padding: "8px 0", fontFamily: font }}>{l}</button>)}
-          <Btn primary onClick={() => { openForm("nav_mobile"); setMobileMenu(false); }} style={{ justifyContent: "center" }}>{t.nav.cta}</Btn>
+          {[["feat", t.nav.feat], ["how", t.nav.how], ["plans", t.nav.plans]].map(([id, l]) => <button key={id} data-attr={`nav-mobile-${id}`} onClick={() => scrollTo(id)} style={{ background: "none", border: "none", color: T.textDark, fontSize: 15, fontWeight: 600, cursor: "pointer", textAlign: "left", padding: "8px 0", fontFamily: font }}>{l}</button>)}
+          <Btn primary data-attr="cta-nav-mobile" onClick={() => { openForm("nav_mobile"); setMobileMenu(false); }} style={{ justifyContent: "center" }}>{t.nav.cta}</Btn>
         </div>}
       </nav>
 
@@ -439,8 +439,8 @@ function LandingPage({ L }) {
         <p className="fu fu2" style={{ fontSize: 19, color: T.textDark, lineHeight: 1.5, maxWidth: 600, margin: "0 auto 14px", fontWeight: 500 }}>{t.hero.sub}</p>
         <p className="fu fu2" style={{ fontSize: 15, color: T.textSec, lineHeight: 1.65, maxWidth: 540, margin: "0 auto 36px" }}>{t.hero.body}</p>
         <div className="fu fu3" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <Btn primary onClick={() => openForm("hero_cta")} style={{ fontSize: 15, padding: "14px 32px" }}>{t.hero.cta1} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
-          <Btn onClick={() => scrollTo("how")} style={{ fontSize: 15, padding: "14px 32px" }}>{t.hero.cta2}</Btn>
+          <Btn primary data-attr="cta-hero" onClick={() => openForm("hero_cta")} style={{ fontSize: 15, padding: "14px 32px" }}>{t.hero.cta1} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
+          <Btn data-attr="cta-hero-how" onClick={() => scrollTo("how")} style={{ fontSize: 15, padding: "14px 32px" }}>{t.hero.cta2}</Btn>
         </div>
       </section>
 
@@ -450,7 +450,7 @@ function LandingPage({ L }) {
           <div style={{ textAlign: "center", marginBottom: 40 }}><h2 style={{ fontSize: 30, fontWeight: 800, color: T.navy }}>{t.feat.title}</h2></div>
           <div className="fg" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
             {t.feat.items.map((f, i) => (
-              <button key={i} onClick={() => { setExpandedFeat(i); track("feature_clicked", { feature: f.tag, index: i }); }}
+              <button key={i} data-attr={`feature-${f.tag}`} onClick={() => { setExpandedFeat(i); track("feature_clicked", { feature: f.tag, index: i }); }}
                 style={{ textAlign: "left", background: T.white, border: `1px solid ${T.border}`, borderRadius: 14, padding: 24, cursor: "pointer", fontFamily: font, transition: "all 0.2s", display: "flex", flexDirection: "column" }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = T.accentBorder; e.currentTarget.style.boxShadow = `0 4px 20px rgba(46,196,160,0.08)`; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.boxShadow = "none"; }}>
@@ -500,7 +500,7 @@ function LandingPage({ L }) {
                 {s.p2 && (
                   <div style={{ marginTop: 12 }}>
                     <p style={{ fontSize: 13, color: T.accent, lineHeight: 1.6, fontWeight: 500 }}>{s.p2}</p>
-                    <button onClick={() => openForm("how_complete")} style={{ marginTop: 10, background: "none", border: `1px solid ${T.accentBorder}`, borderRadius: 8, padding: "8px 18px", color: T.accent, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: font, display: "inline-flex", alignItems: "center", gap: 6, transition: "all 0.2s" }}
+                    <button data-attr="cta-how-complete" onClick={() => openForm("how_complete")} style={{ marginTop: 10, background: "none", border: `1px solid ${T.accentBorder}`, borderRadius: 8, padding: "8px 18px", color: T.accent, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: font, display: "inline-flex", alignItems: "center", gap: 6, transition: "all 0.2s" }}
                       onMouseEnter={(e) => { e.currentTarget.style.background = T.accentSoft; }} onMouseLeave={(e) => { e.currentTarget.style.background = "none"; }}>
                       <I d={ic.puzzle} size={13} color={T.accent} />{t.complete}
                     </button>
@@ -546,10 +546,10 @@ function LandingPage({ L }) {
         <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontSize: 30, fontWeight: 800, color: T.navy, marginBottom: 12 }}>{t.plan.h}</h2>
           <p style={{ fontSize: 15, color: T.textSec, lineHeight: 1.7, marginBottom: 32 }}>{t.plan.sub}</p>
-          <Btn primary onClick={() => openForm("plan_starter")} style={{ fontSize: 16, padding: "15px 40px" }}>{t.plan.cta} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
+          <Btn primary data-attr="cta-plan-starter" onClick={() => openForm("plan_starter")} style={{ fontSize: 16, padding: "15px 40px" }}>{t.plan.cta} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
           <div style={{ marginTop: 24, padding: "16px 24px", borderRadius: 10, background: T.bgSoft, border: `1px solid ${T.border}`, display: "inline-flex", alignItems: "center", gap: 12 }}>
             <span style={{ fontSize: 14, color: T.textSec }}>{t.plan.more}</span>
-            <button onClick={() => openForm("plan_multi")} style={{ background: "none", border: "none", color: T.accent, fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: font, textDecoration: "underline" }}>{t.plan.moreCta}</button>
+            <button data-attr="cta-plan-multi" onClick={() => openForm("plan_multi")} style={{ background: "none", border: "none", color: T.accent, fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: font, textDecoration: "underline" }}>{t.plan.moreCta}</button>
           </div>
         </div>
       </section>
@@ -561,7 +561,7 @@ function LandingPage({ L }) {
           <p style={{ fontSize: 14, color: T.textSec, lineHeight: 1.6, marginBottom: 28 }}>{t.catalog.sub}</p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
             {products[lang].map((prod) => (
-              <button key={prod.id} onClick={() => { setDppProd(prod); setDppTab(0); track("catalog_product_clicked", { product: prod.name }); }}
+              <button key={prod.id} data-attr={`product-${prod.id}`} onClick={() => { setDppProd(prod); setDppTab(0); track("catalog_product_clicked", { product: prod.name }); }}
                 style={{ padding: "16px 20px", borderRadius: 12, background: T.white, border: `1px solid ${T.border}`, display: "flex", alignItems: "center", gap: 12, cursor: "pointer", fontFamily: font, transition: "all 0.2s", textAlign: "left", minWidth: 220 }}
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = T.accentBorder; e.currentTarget.style.boxShadow = `0 4px 16px rgba(46,196,160,0.08)`; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.boxShadow = "none"; }}>
@@ -580,7 +580,7 @@ function LandingPage({ L }) {
       {/* ─── FINAL CTA ─── */}
       <section id="final" data-track-section className="sp" style={{ padding: "72px 24px", background: T.navy, textAlign: "center" }}>
         <h2 style={{ fontSize: 30, fontWeight: 800, color: T.text, lineHeight: 1.3, maxWidth: 600, margin: "0 auto 28px" }}>{t.final.h}</h2>
-        <Btn primary onClick={() => openForm("final_cta")} style={{ fontSize: 16, padding: "15px 40px" }}>{t.final.cta} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
+        <Btn primary data-attr="cta-final" onClick={() => openForm("final_cta")} style={{ fontSize: 16, padding: "15px 40px" }}>{t.final.cta} <I d={ic.arrow} size={16} color={T.navy} /></Btn>
       </section>
 
       {/* ─── FOOTER (compact, with vision line) ─── */}
