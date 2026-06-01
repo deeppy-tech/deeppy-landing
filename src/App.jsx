@@ -283,11 +283,11 @@ const FormModal = ({ open, onClose, t, context }) => {
   if (!open) return null;
   const submit = () => {
     track("form_submitted", { ...form, context });
-    // Formsubmit.co — free, unlimited, no account needed
-    fetch("https://formsubmit.co/ajax/info@deeppy.eu", {
+    // Formspree AJAX
+    fetch("https://formspree.io/f/xykvqlvw", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ ...form, context, _subject: "Nuovo lead DeePPy — " + (form.company || form.name || "Anonimo"), _template: "table" }),
+      body: JSON.stringify({ ...form, context, _subject: "Nuovo lead DeePPy — " + (form.company || form.name || "Anonimo") }),
     }).catch(console.error);
     setSent(true);
   };
